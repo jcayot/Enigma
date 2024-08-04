@@ -39,11 +39,15 @@ public class EnigmaController {
     }
 
     public void parseMainMenuAction(String input) {
-        int n = Parsing.parseNumericalInput(input, 1, 3);
-        switch (n) {
-            case 1 -> view.encodePrompt();
-            case 2 -> this.launchSetup();
-            case 3 -> this.exit();
+        try {
+            int n = Parsing.parseNumericalInput(input, 1, 3);
+            switch (n) {
+                case 1 -> view.encodePrompt();
+                case 2 -> this.launchSetup();
+                case 3 -> this.exit();
+            }
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
         }
     }
 

@@ -26,11 +26,15 @@ public class SetupController {
 	}
 
 	public void parseSetupMenuAction(String input) {
-		int n = Parsing.parseNumericalInput(input, 1, 4);
-		switch (n) {
-			case 1 -> view.rotorSetup(enigma.getNumberOfRotors());
-			case 2 -> view.promptForReflector();
-			case 3 -> view.plugboardSetup();
+		try {
+			int n = Parsing.parseNumericalInput(input, 1, 4);
+			switch (n) {
+				case 1 -> view.rotorSetup(enigma.getNumberOfRotors());
+				case 2 -> view.promptForReflector();
+				case 3 -> view.plugboardSetup();
+			}
+		} catch (Exception e) {
+			view.displayError(e.getMessage());
 		}
 	}
 
@@ -52,56 +56,56 @@ public class SetupController {
 	}
 
 	public void parsePlugboardSetupMenuAction(String input) {
-		int n = Parsing.parseNumericalInput(input, 1, 3);
-		switch (n) {
-			case 1 -> view.promptForNewLink();
-			case 2 -> view.promptForLinkToRemove();
-			case 3 -> view.displayPlugboardLinks(enigma.getPlugboardLinks());
-			case 4 -> this.exit();
+		try {
+			int n = Parsing.parseNumericalInput(input, 1, 3);
+			switch (n) {
+				case 1 -> view.promptForNewLink();
+				case 2 -> view.promptForLinkToRemove();
+				case 3 -> view.displayPlugboardLinks(enigma.getPlugboardLinks());
+				case 4 -> this.exit();
+			}
+		} catch (Exception e) {
+			view.displayError(e.getMessage());
 		}
 	}
 
 	public void putStandardRotor(int slot, String input) {
-		int n = Parsing.parseNumericalInput(input, 1, 7);
-		if (n != -1) {
-			try {
+		try {
+			int n = Parsing.parseNumericalInput(input, 1, 7);
+			if (n != -1)
 				enigma.putRotor(slot, Rotor.make(StandardRotorWiring.values()[n - 1]));
-			} catch (Exception e) {
-				view.displayError(e.getMessage());
-			}
+		} catch (Exception e) {
+			view.displayError(e.getMessage());
 		}
 	}
 
 	public void editRotorRingSetting(int slot, String input) {
-		int n = Parsing.parseNumericalInput(input, 0, enigma.getCharactersLength());
-		if (n != -1) {
-			try {
+		try {
+			int n = Parsing.parseNumericalInput(input, 0, enigma.getCharactersLength());
+			if (n != -1)
 				enigma.setRingSetting(slot, n);
-			} catch (Exception e) {
-				view.displayError(e.getMessage());
-			}
+		} catch (Exception e) {
+			view.displayError(e.getMessage());
 		}
 	}
 
 	public void editRotorOffset(int slot, String input) {
-		int n = Parsing.parseNumericalInput(input, 0, enigma.getCharactersLength());
-		if (n != -1) {
-			try {
+		try {
+			int n = Parsing.parseNumericalInput(input, 0, enigma.getCharactersLength());
+			if (n != -1)
 				enigma.setRotorOffset(slot, n);
-			} catch (Exception e) {
-				view.displayError(e.getMessage());
-			}
+		} catch (Exception e) {
+			view.displayError(e.getMessage());
 		}
 	}
 
 	public void putStandardReflector(String input) {
-		int n = Parsing.parseNumericalInput(input, 1, 3);
-		if (n != -1) {
-			try {
+		try {
+			int n = Parsing.parseNumericalInput(input, 1, 3);
+			if (n != -1)
 				enigma.setReflector(Reflector.make(StandardReflectorWiring.values()[n - 1]));
-			} catch (Exception e) {
-				view.displayError(e.getMessage());
-			}
+		} catch (Exception e) {
+			view.displayError(e.getMessage());
 		}
 	}
 
