@@ -1,7 +1,7 @@
-package view;
+package com.cayot.enigma.view;
 
-import controller.SetupController;
-import model.Link;
+import com.cayot.enigma.controller.SetupController;
+import com.cayot.enigma.model.Link;
 
 public interface SetupViewable {
 

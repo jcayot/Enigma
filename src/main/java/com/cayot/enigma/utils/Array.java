@@ -1,4 +1,4 @@
-package utils;
+package com.cayot.enigma.utils;
 
 public class Array {
 

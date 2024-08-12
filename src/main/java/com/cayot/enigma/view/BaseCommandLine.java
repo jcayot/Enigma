@@ -1,4 +1,4 @@
-package view;
+package com.cayot.enigma.view;
 
 public class BaseCommandLine {
 

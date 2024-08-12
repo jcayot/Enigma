@@ -1,8 +1,8 @@
-package controller;
+package com.cayot.enigma.controller;
 
-import model.*;
-import utils.Parsing;
-import view.SetupViewable;
+import com.cayot.enigma.model.*;
+import com.cayot.enigma.utils.Parsing;
+import com.cayot.enigma.view.SetupViewable;
 
 public class SetupController {
 	private final Enigma enigma;

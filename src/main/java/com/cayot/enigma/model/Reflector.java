@@ -1,8 +1,8 @@
-package model;
+package com.cayot.enigma.model;
 
-import utils.Array;
+import com.cayot.enigma.utils.Array;
 
-import static utils.Array.makeAlphabeticalArray;
+import static com.cayot.enigma.utils.Array.makeAlphabeticalArray;
 
 public class Reflector extends SubstitutionPart {
 

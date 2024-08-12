@@ -1,6 +1,6 @@
-package model;
+package com.cayot.enigma.model;
 
-import utils.Array;
+import com.cayot.enigma.utils.Array;
 
 import java.util.Arrays;
 

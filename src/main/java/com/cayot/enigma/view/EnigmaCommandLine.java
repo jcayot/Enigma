@@ -1,6 +1,6 @@
-package view;
+package com.cayot.enigma.view;
 
-import controller.EnigmaController;
+import com.cayot.enigma.controller.EnigmaController;
 
 import java.util.Scanner;
 
