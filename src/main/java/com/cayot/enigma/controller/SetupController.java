@@ -125,6 +125,11 @@ public class SetupController {
 		}
 	}
 
+	public void viewFatalError(Exception e) {
+		view.displayError(e.getMessage());
+		System.exit(1);
+	}
+
 	private void initialSetup() {
 		view.firstTimeSetupPrompt();
 		for (int i = 0; i < enigma.getNumberOfRotors(); i++) {

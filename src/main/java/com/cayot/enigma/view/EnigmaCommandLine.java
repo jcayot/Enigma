@@ -2,16 +2,11 @@ package com.cayot.enigma.view;
 
 import com.cayot.enigma.controller.EnigmaController;
 
-import java.util.Scanner;
+import java.util.NoSuchElementException;
 
 public class EnigmaCommandLine extends BaseCommandLine implements EnigmaViewable {
 
     private EnigmaController controller;
-    private final Scanner scanner;
-
-    public EnigmaCommandLine() {
-        this.scanner = new Scanner(System.in);
-    }
 
     @Override
     public void setController(EnigmaController controller) {
@@ -25,13 +20,21 @@ public class EnigmaCommandLine extends BaseCommandLine implements EnigmaViewable
         System.out.println("1 - Encode/decode a message");
         System.out.println("2 - Modify Enigma configuration");
         System.out.println("3 - Exit");
-        controller.parseMainMenuAction(scanner.nextLine());
+        try {
+            controller.parseMainMenuAction(consoleNextLine());
+        } catch (NoSuchElementException e) {
+            controller.viewFatalError(e);
+        }
     }
 
     @Override
     public void encodePrompt() {
         System.out.println("Enter the message to encode: ");
-    	controller.encodeInput(scanner.nextLine());
+        try {
+            controller.encodeInput(consoleNextLine());
+        } catch (NoSuchElementException e) {
+            controller.viewFatalError(e);
+        }
     }
 
     @Override

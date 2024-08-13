@@ -7,27 +7,27 @@ public interface SetupViewable {
 
 	void setController(SetupController controller);
 
+	void firstTimeSetupPrompt();
+
+	void standardSetup();
+
 	void rotorSetup(int numberOfRotors);
 
 	void plugboardSetup();
 
-	void promptForLinkToRemove();
-
-	void promptForNewLink();
-
-	void displayPlugboardLinks(Link[] links);
-
-	void editRotorRingSetting(int slot, int ringSetting, int maxValue);
+	void promptForRotor(int i);
 
 	void editRotorOffset(int slot, int ringSetting, int maxValue);
 
-	void standardSetup();
-
-	void firstTimeSetupPrompt();
-
-	void promptForRotor(int i);
+	void editRotorRingSetting(int slot, int ringSetting, int maxValue);
 
 	void promptForReflector();
+
+	void promptForNewLink();
+
+	void promptForLinkToRemove();
+
+	void displayPlugboardLinks(Link[] links);
 
 	void displayError(String errorMessage);
 }

@@ -7,6 +7,8 @@ import com.cayot.enigma.view.EnigmaViewable;
 import com.cayot.enigma.view.SetupCommandLine;
 import com.cayot.enigma.view.SetupViewable;
 
+import java.util.NoSuchElementException;
+
 public class EnigmaController {
     private final Enigma enigma;
     private final EnigmaViewable view;
@@ -49,6 +51,11 @@ public class EnigmaController {
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
+    }
+
+    public void viewFatalError(Exception e) {
+        view.displayError(e.getMessage());
+        System.exit(1);
     }
 
     private void launchSetup() {
