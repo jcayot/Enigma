@@ -27,11 +27,13 @@ public class SetupController {
 
 	public void parseSetupMenuAction(String input) {
 		try {
-			int n = Parsing.parseNumericalInput(input, 1, 4);
+			int n = Parsing.parseNumericalInput(input, 1, 5);
 			switch (n) {
 				case 1 -> view.rotorSetup(enigma.getNumberOfRotors());
-				case 2 -> view.promptForReflector();
-				case 3 -> view.plugboardSetup();
+				case 2 -> this.resetRotorsOffset();
+				case 3 -> view.promptForReflector();
+				case 4 -> view.plugboardSetup();
+				case 5 -> this.exit();
 			}
 		} catch (Exception e) {
 			view.displayError(e.getMessage());
@@ -40,14 +42,13 @@ public class SetupController {
 
 	public void parseRotorSetupMenuAction(int slot, String input) {
 		try {
-			if (slot < 0 || slot > enigma.getNumberOfRotors())
+			if (slot < 0 || slot > enigma.getNumberOfRotors() - 1)
 				throw new IndexOutOfBoundsException("Rotor number out of bond. Must be between 0 and " + (enigma.getNumberOfRotors() - 1) + " incuded.");
-			int n = Parsing.parseNumericalInput(input, 1, 3);
+			int n = Parsing.parseNumericalInput(input, 1, 2);
 			if (n != -1) {
 				switch (n) {
 					case 1 -> view.promptForRotor(slot);
 					case 2 -> view.editRotorRingSetting(slot, enigma.getRingSetting(slot), enigma.getCharactersLength());
-					case 3 -> view.editRotorOffset(slot, enigma.getRotorOffset(slot), enigma.getCharactersLength());
 				}
 			}
 		} catch (Exception e) {
@@ -57,7 +58,7 @@ public class SetupController {
 
 	public void parsePlugboardSetupMenuAction(String input) {
 		try {
-			int n = Parsing.parseNumericalInput(input, 1, 3);
+			int n = Parsing.parseNumericalInput(input, 1, 4);
 			switch (n) {
 				case 1 -> view.promptForNewLink();
 				case 2 -> view.promptForLinkToRemove();
@@ -79,21 +80,17 @@ public class SetupController {
 		}
 	}
 
+	public void	resetRotorsOffset() {
+		for (int i = 0; i < enigma.getNumberOfRotors(); i++) {
+			enigma.setRotorOffset(i, 0);
+		}
+	}
+
 	public void editRotorRingSetting(int slot, String input) {
 		try {
 			int n = Parsing.parseNumericalInput(input, 0, enigma.getCharactersLength());
 			if (n != -1)
 				enigma.setRingSetting(slot, n);
-		} catch (Exception e) {
-			view.displayError(e.getMessage());
-		}
-	}
-
-	public void editRotorOffset(int slot, String input) {
-		try {
-			int n = Parsing.parseNumericalInput(input, 0, enigma.getCharactersLength());
-			if (n != -1)
-				enigma.setRotorOffset(slot, n);
 		} catch (Exception e) {
 			view.displayError(e.getMessage());
 		}

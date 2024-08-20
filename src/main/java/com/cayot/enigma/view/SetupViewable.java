@@ -17,8 +17,6 @@ public interface SetupViewable {
 
 	void promptForRotor(int i);
 
-	void editRotorOffset(int slot, int ringSetting, int maxValue);
-
 	void editRotorRingSetting(int slot, int ringSetting, int maxValue);
 
 	void promptForReflector();

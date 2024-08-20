@@ -1,7 +1,5 @@
 package com.cayot.enigma.model;
 
-import com.cayot.enigma.utils.Array;
-
 import java.util.Arrays;
 
 public class Enigma {
@@ -89,8 +87,6 @@ public class Enigma {
     public char encode(char c) throws IllegalArgumentException, IllegalStateException {
         if (this.requireSetup())
 			throw new IllegalStateException("Enigma is not yet set-up. Please set-up before encoding.");
-        else if (!Array.contain(characters, c))
-            throw new IllegalArgumentException("Character " + c + " not in set");
 
         c = plugboard.encode(c, false);
 

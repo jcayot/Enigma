@@ -24,9 +24,10 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 		System.out.println("Enigma - Setup :");
 		System.out.println("What would you like to change :");
 		System.out.println("1 - Rotor configuration");
-		System.out.println("2 - Reflector configuration");
-		System.out.println("3 - Plugboard configuration");
-		System.out.println("4 - Exit configuration");
+		System.out.println("2 - Reset all rotors offset");
+		System.out.println("3 - Reflector configuration");
+		System.out.println("4 - Plugboard configuration");
+		System.out.println("5 - Exit configuration");
 		try {
 			controller.parseSetupMenuAction(consoleNextLine());
 		} catch (NoSuchElementException e) {
@@ -37,14 +38,12 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 	@Override
 	public void rotorSetup(int numberOfRotors) {
 		System.out.println("In which slot would you like to edit rotor ?");
-		System.out.println("Enter a number between 0 and " + (numberOfRotors - 1) + " included.");
 		try {
 			int slot = consoleNextInt();
 			consoleSkipNextLine();
 			System.out.println("What action would you like to perform ?");
 			System.out.println("1 - Change rotor");
 			System.out.println("2 - Edit ring setting");
-			System.out.println("3 - Edit offset");
 			controller.parseRotorSetupMenuAction(slot, consoleNextLine());
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
@@ -78,19 +77,10 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 	public void editRotorRingSetting(int slot, int ringSetting, int maxValue) {
 		System.out.println("Current ring setting for rotor " + slot + " is index " + ringSetting);
 		System.out.println("Enter the new ring setting for rotor " + slot + " (0-" + maxValue + "): ");
+		System.out.println("All rotors offset will be reset");
 		try {
 			controller.editRotorRingSetting(slot, consoleNextLine());
-		} catch (NoSuchElementException e) {
-			controller.viewFatalError(e);
-		}
-	}
-
-	@Override
-	public void editRotorOffset(int slot, int ringSetting, int maxValue) {
-		System.out.println("Current offset for rotor " + slot + " is index " + ringSetting);
-		System.out.println("Enter the new offset for rotor " + slot + " (0-" + maxValue + "): ");
-		try {
-			controller.editRotorOffset(slot, consoleNextLine());
+			controller.resetRotorsOffset();
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
 		}
