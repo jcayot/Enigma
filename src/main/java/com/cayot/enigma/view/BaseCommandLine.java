@@ -15,15 +15,6 @@ public abstract class BaseCommandLine {
 		return (scanner.nextLine());
 	}
 
-	protected int consoleNextInt() throws NoSuchElementException {
-		return (scanner.nextInt());
-	}
-
-	protected void consoleSkipNextLine() throws NoSuchElementException {
-		if (scanner.hasNextLine())
-			scanner.nextLine();
-	}
-
 	public void displayError(String errorMessage) {
 		System.err.println("Error : " + errorMessage);
 	}

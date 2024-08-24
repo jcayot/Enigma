@@ -1,13 +1,10 @@
 package com.cayot.enigma.controller;
 
 import com.cayot.enigma.model.*;
-import com.cayot.enigma.utils.Parsing;
 import com.cayot.enigma.view.EnigmaCommandLine;
 import com.cayot.enigma.view.EnigmaViewable;
 import com.cayot.enigma.view.SetupCommandLine;
 import com.cayot.enigma.view.SetupViewable;
-
-import java.util.NoSuchElementException;
 
 public class EnigmaController {
     private final Enigma enigma;
@@ -40,16 +37,11 @@ public class EnigmaController {
         }
     }
 
-    public void parseMainMenuAction(String input) {
-        try {
-            int n = Parsing.parseNumericalInput(input, 1, 3);
-            switch (n) {
-                case 1 -> view.encodePrompt();
-                case 2 -> this.launchSetup();
-                case 3 -> this.exit();
-            }
-        } catch (Exception e) {
-            view.displayError(e.getMessage());
+    public void mainMenuAction(int action) {
+        switch (action) {
+            case 1 -> view.encodePrompt();
+            case 2 -> this.launchSetup();
+            case 3 -> this.exit();
         }
     }
 

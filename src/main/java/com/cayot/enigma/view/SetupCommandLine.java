@@ -2,7 +2,9 @@ package com.cayot.enigma.view;
 
 import com.cayot.enigma.controller.SetupController;
 import com.cayot.enigma.model.Link;
+import com.cayot.enigma.utils.Parsing;
 
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 
 public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
@@ -29,9 +31,12 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 		System.out.println("4 - Plugboard configuration");
 		System.out.println("5 - Exit configuration");
 		try {
-			controller.parseSetupMenuAction(consoleNextLine());
+			String input = consoleNextLine();
+			controller.setupMenuAction(Parsing.parseNumericalInput(input, 1, 5));
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
+		} catch (IllegalArgumentException e) {
+			this.displayError(e.getMessage());
 		}
 	}
 
@@ -39,12 +44,14 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 	public void rotorSetup(int numberOfRotors) {
 		System.out.println("In which slot would you like to edit rotor ?");
 		try {
-			int slot = consoleNextInt();
-			consoleSkipNextLine();
+			int slot = Parsing.parseNumericalInput(consoleNextLine(), 0, numberOfRotors - 1);
 			System.out.println("What action would you like to perform ?");
 			System.out.println("1 - Change rotor");
 			System.out.println("2 - Edit ring setting");
-			controller.parseRotorSetupMenuAction(slot, consoleNextLine());
+			String input = consoleNextLine();
+			controller.parseRotorSetupMenuAction(slot, Parsing.parseNumericalInput(input, 1, 2));
+		} catch (InputMismatchException | IllegalArgumentException e) {
+			this.displayError(e.getMessage());
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
 		}
@@ -57,9 +64,12 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 		System.out.println("2 - Remove a link");
 		System.out.println("3 - Show current links");
 		try {
-			controller.parsePlugboardSetupMenuAction(consoleNextLine());
+			String input = consoleNextLine();
+			controller.parsePlugboardSetupMenuAction(Parsing.parseNumericalInput(input, 1, 3));
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
+		} catch (IllegalArgumentException e) {
+			this.displayError(e.getMessage());
 		}
 	}
 
@@ -67,9 +77,12 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 	public void promptForRotor(int i) {
 		System.out.println("Enter the type of rotor for slot " + i + " : ");
 		try {
-			controller.putStandardRotor(i, consoleNextLine());
+			String input = consoleNextLine();
+			controller.putStandardRotor(i, Parsing.parseNumericalInput(input, 1, 7));
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
+		} catch (IllegalArgumentException e) {
+			this.displayError(e.getMessage());
 		}
 	}
 
@@ -79,10 +92,13 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 		System.out.println("Enter the new ring setting for rotor " + slot + " (0-" + maxValue + "): ");
 		System.out.println("All rotors offset will be reset");
 		try {
-			controller.editRotorRingSetting(slot, consoleNextLine());
+			String input = consoleNextLine();
+			controller.editRotorRingSetting(slot, Parsing.parseNumericalInput(input, 0, maxValue));
 			controller.resetRotorsOffset();
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
+		} catch (IllegalArgumentException e) {
+			this.displayError(e.getMessage());
 		}
 	}
 
@@ -90,9 +106,12 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 	public void promptForReflector() {
 		System.out.println("Enter the type of reflector : ");
 		try {
-			controller.putStandardReflector(consoleNextLine());
+			String input = consoleNextLine();
+			controller.putStandardReflector(Parsing.parseNumericalInput(input, 1, 3));
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
+		} catch (IllegalArgumentException e) {
+			this.displayError(e.getMessage());
 		}
 	}
 

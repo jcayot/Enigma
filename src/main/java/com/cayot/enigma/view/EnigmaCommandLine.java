@@ -1,6 +1,7 @@
 package com.cayot.enigma.view;
 
 import com.cayot.enigma.controller.EnigmaController;
+import com.cayot.enigma.utils.Parsing;
 
 import java.util.NoSuchElementException;
 
@@ -21,9 +22,12 @@ public class EnigmaCommandLine extends BaseCommandLine implements EnigmaViewable
         System.out.println("2 - Modify Enigma configuration");
         System.out.println("3 - Exit");
         try {
-            controller.parseMainMenuAction(consoleNextLine());
+            String input = consoleNextLine();
+            controller.mainMenuAction(Parsing.parseNumericalInput(input, 1, 3));
         } catch (NoSuchElementException e) {
             controller.viewFatalError(e);
+        } catch (IllegalArgumentException e) {
+            this.displayError(e.getMessage());
         }
     }
 

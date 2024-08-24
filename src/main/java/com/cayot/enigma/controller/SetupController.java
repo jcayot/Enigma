@@ -1,7 +1,6 @@
 package com.cayot.enigma.controller;
 
 import com.cayot.enigma.model.*;
-import com.cayot.enigma.utils.Parsing;
 import com.cayot.enigma.view.SetupViewable;
 
 public class SetupController {
@@ -25,56 +24,35 @@ public class SetupController {
 		}
 	}
 
-	public void parseSetupMenuAction(String input) {
-		try {
-			int n = Parsing.parseNumericalInput(input, 1, 5);
-			switch (n) {
-				case 1 -> view.rotorSetup(enigma.getNumberOfRotors());
-				case 2 -> this.resetRotorsOffset();
-				case 3 -> view.promptForReflector();
-				case 4 -> view.plugboardSetup();
-				case 5 -> this.exit();
-			}
-		} catch (Exception e) {
-			view.displayError(e.getMessage());
+	public void setupMenuAction(int action) {
+		switch (action) {
+			case 1 -> view.rotorSetup(enigma.getNumberOfRotors());
+			case 2 -> this.resetRotorsOffset();
+			case 3 -> view.promptForReflector();
+			case 4 -> view.plugboardSetup();
+			case 5 -> this.exit();
 		}
 	}
 
-	public void parseRotorSetupMenuAction(int slot, String input) {
-		try {
-			if (slot < 0 || slot > enigma.getNumberOfRotors() - 1)
-				throw new IndexOutOfBoundsException("Rotor number out of bond. Must be between 0 and " + (enigma.getNumberOfRotors() - 1) + " incuded.");
-			int n = Parsing.parseNumericalInput(input, 1, 2);
-			if (n != -1) {
-				switch (n) {
-					case 1 -> view.promptForRotor(slot);
-					case 2 -> view.editRotorRingSetting(slot, enigma.getRingSetting(slot), enigma.getCharactersLength());
-				}
-			}
-		} catch (Exception e) {
-			view.displayError(e.getMessage());
+	public void parseRotorSetupMenuAction(int slot, int action) {
+		switch (action) {
+			case 1 -> view.promptForRotor(slot);
+			case 2 -> view.editRotorRingSetting(slot, enigma.getRingSetting(slot), enigma.getCharactersLength());
 		}
 	}
 
-	public void parsePlugboardSetupMenuAction(String input) {
-		try {
-			int n = Parsing.parseNumericalInput(input, 1, 4);
-			switch (n) {
-				case 1 -> view.promptForNewLink();
-				case 2 -> view.promptForLinkToRemove();
-				case 3 -> view.displayPlugboardLinks(enigma.getPlugboardLinks());
-				case 4 -> this.exit();
-			}
-		} catch (Exception e) {
-			view.displayError(e.getMessage());
+	public void parsePlugboardSetupMenuAction(int action) {
+		switch (action) {
+			case 1 -> view.promptForNewLink();
+			case 2 -> view.promptForLinkToRemove();
+			case 3 -> view.displayPlugboardLinks(enigma.getPlugboardLinks());
+			case 4 -> this.exit();
 		}
 	}
 
-	public void putStandardRotor(int slot, String input) {
+	public void putStandardRotor(int slot, int value) {
 		try {
-			int n = Parsing.parseNumericalInput(input, 1, 7);
-			if (n != -1)
-				enigma.putRotor(slot, Rotor.make(StandardRotorWiring.values()[n - 1]));
+			enigma.putRotor(slot, Rotor.make(StandardRotorWiring.values()[value - 1]));
 		} catch (Exception e) {
 			view.displayError(e.getMessage());
 		}
@@ -86,21 +64,17 @@ public class SetupController {
 		}
 	}
 
-	public void editRotorRingSetting(int slot, String input) {
+	public void editRotorRingSetting(int slot, int value) {
 		try {
-			int n = Parsing.parseNumericalInput(input, 0, enigma.getCharactersLength());
-			if (n != -1)
-				enigma.setRingSetting(slot, n);
+			enigma.setRingSetting(slot, value);
 		} catch (Exception e) {
 			view.displayError(e.getMessage());
 		}
 	}
 
-	public void putStandardReflector(String input) {
+	public void putStandardReflector(int value) {
 		try {
-			int n = Parsing.parseNumericalInput(input, 1, 3);
-			if (n != -1)
-				enigma.setReflector(Reflector.make(StandardReflectorWiring.values()[n - 1]));
+			enigma.setReflector(Reflector.make(StandardReflectorWiring.values()[value - 1]));
 		} catch (Exception e) {
 			view.displayError(e.getMessage());
 		}
