@@ -29,8 +29,11 @@ public class EnigmaController {
     public void encodeInput(String input) {
         try {
             StringBuilder encodedInput = new StringBuilder();
-            for (char c : input.toCharArray())
-                encodedInput.append(enigma.encode(c));
+
+			for (int i = 0; i < input.length(); i++) {
+				encodedInput.append(enigma.encode(input.charAt(i)));
+			}
+
             view.displayEncodedMessage(encodedInput.toString());
         } catch (RuntimeException e) {
             view.displayError(e.getMessage());

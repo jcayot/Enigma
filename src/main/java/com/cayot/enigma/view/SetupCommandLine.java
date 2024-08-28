@@ -45,7 +45,7 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 		System.out.println("In which slot would you like to edit rotor ?");
 		try {
 			int slot = Parsing.parseNumericalInput(consoleNextLine(), 0, numberOfRotors - 1);
-			System.out.println("What action would you like to perform ?");
+			System.out.println("What action would you like to perform ? (From " + 0 + " to " + (numberOfRotors - 1) + ")");
 			System.out.println("1 - Change rotor");
 			System.out.println("2 - Edit ring setting");
 			String input = consoleNextLine();
@@ -56,7 +56,7 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 			controller.viewFatalError(e);
 		}
 	}
-
+	
 	@Override
 	public void plugboardSetup() {
 		System.out.println("Plugboard setup : ");
@@ -89,11 +89,11 @@ public class SetupCommandLine extends BaseCommandLine implements SetupViewable {
 	@Override
 	public void editRotorRingSetting(int slot, int ringSetting, int maxValue) {
 		System.out.println("Current ring setting for rotor " + slot + " is index " + ringSetting);
-		System.out.println("Enter the new ring setting for rotor " + slot + " (0-" + maxValue + "): ");
+		System.out.println("Enter the new ring setting for rotor " + slot + " (0-" + (maxValue - 1) + "): ");
 		System.out.println("All rotors offset will be reset");
 		try {
 			String input = consoleNextLine();
-			controller.editRotorRingSetting(slot, Parsing.parseNumericalInput(input, 0, maxValue));
+			controller.editRotorRingSetting(slot, Parsing.parseNumericalInput(input, 0, maxValue - 1));
 			controller.resetRotorsOffset();
 		} catch (NoSuchElementException e) {
 			controller.viewFatalError(e);
