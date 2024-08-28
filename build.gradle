@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(22)
+    }
+}
+
+group 'com.cayot.enigma'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'com.cayot.enigma.run.CommandLineRun'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.named('run', JavaExec) {
+    standardInput = System.in
+}

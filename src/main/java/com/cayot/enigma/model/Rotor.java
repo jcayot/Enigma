@@ -1,8 +1,8 @@
-package model;
+package com.cayot.enigma.model;
 
-import utils.Array;
+import com.cayot.enigma.utils.Array;
 
-import static utils.Array.makeAlphabeticalArray;
+import static com.cayot.enigma.utils.Array.makeAlphabeticalArray;
 
 public class Rotor extends SubstitutionPart {
     private final char[] notch;
@@ -76,10 +76,13 @@ public class Rotor extends SubstitutionPart {
         return (Array.contain(notch, characters[offset % 26]));
     }
 
-    public void incrementOffset() {
+    public boolean incrementOffset() {
+        boolean passedNotch = isOnNotch();
+
         if (offset < characters.length - 1)
             offset++;
         else
             offset = 0;
+        return (passedNotch);
     }
 }

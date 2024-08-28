@@ -1,4 +1,4 @@
-package model;
+package com.cayot.enigma.model;
 
 import java.util.Arrays;
 
