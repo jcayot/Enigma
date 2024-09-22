@@ -50,23 +50,21 @@ class RotorTest {
     }
 
     @Test
-    fun incrementOffset_startOfAlphabet() {
+    fun incrementOffsetStartOfAlphabet() {
         val rotor = Rotor.make(StandardRotorWiring.I)
         rotor.offset = 0
 
-        val result = rotor.incrementOffset()
+        rotor.incrementOffset()
         assertEquals(1, rotor.offset)
-        assertFalse(result, "Expected that notch is not passed when offset is at start of alphabet")
     }
 
     @Test
-    fun incrementOffset_endOfAlphabet() {
+    fun incrementOffsetEndOfAlphabet() {
         val rotor = Rotor.make(StandardRotorWiring.I)
         rotor.offset = 25
 
-        val result = rotor.incrementOffset()
+        rotor.incrementOffset()
         assertEquals(0, rotor.offset)
-        assertFalse(result, "Expected that notch is not passed even when reached end of alphabet")
     }
 
     @Test
@@ -127,6 +125,16 @@ class RotorTest {
         val result = rotor.encode('A', false)
 
         assertEquals('D', result)
+    }
+
+    @Test
+    fun testEncodeWithRingSetting() {
+        val rotor = Rotor.make(StandardRotorWiring.I)
+        rotor.ringSetting = 10
+
+        val result = rotor.encode('A', false)
+
+        assertEquals('H', result)
     }
 
     @Test

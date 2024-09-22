@@ -20,6 +20,30 @@ public class Enigma {
 			this.rotors = new Rotor[1];
 	}
 
+	public char encode(char c) throws IllegalArgumentException, IllegalStateException {
+		if (this.requireSetup())
+			throw new IllegalStateException("Enigma is not yet set-up. Please set-up before encoding.");
+
+		c = plugboard.encode(c, false);
+
+		boolean moveNext = true;
+		for (int i = rotors.length - 1; i >= 0; i--) {
+			if (moveNext || (i == 1 && rotors[i].isOnNotch())) {
+				moveNext = rotors[i].incrementOffset();
+			}
+			c = rotors[i].encode(c, false);
+		}
+
+		c = reflector.encode(c, false);
+
+		for (int i = 0; i < rotors.length; i++)
+			c = rotors[i].encode(c, true);
+
+		c = plugboard.encode(c, true);
+
+		return (c);
+	}
+
 	public int getCharactersLength() {
 		return characters.length;
 	}
@@ -82,29 +106,5 @@ public class Enigma {
 
 	public void removePlugboardLink(char c1) throws IllegalArgumentException {
 		plugboard.removeLink(c1);
-	}
-
-	public char encode(char c) throws IllegalArgumentException, IllegalStateException {
-		if (this.requireSetup())
-			throw new IllegalStateException("Enigma is not yet set-up. Please set-up before encoding.");
-
-		c = plugboard.encode(c, false);
-
-		boolean moveNext = true;
-		for (int i = rotors.length - 1; i >= 0; i--) {
-			if (moveNext || (i == 1 && rotors[i].isOnNotch())) {
-				moveNext = rotors[i].incrementOffset();
-			}
-			c = rotors[i].encode(c, false);
-		}
-
-		c = reflector.encode(c, false);
-
-		for (int i = 0; i < rotors.length; i++)
-			c = rotors[i].encode(c, true);
-
-		c = plugboard.encode(c, true);
-
-		return (c);
 	}
 }
