@@ -11,6 +11,8 @@ public class Plugboard extends SubstitutionPart {
     public void addLink(char c1, char c2) throws IllegalArgumentException {
         int linkIndex, reverseLinkIndex;
 
+        if (c1 == c2)
+            throw new IllegalArgumentException(c1 + " cannot be wired to itself");
         linkIndex = getLinkIndex(c1);
         reverseLinkIndex = getLinkIndex(c2);
         if (linkIndex == -1)
@@ -25,8 +27,7 @@ public class Plugboard extends SubstitutionPart {
         links[reverseLinkIndex] = new Link(c2, c1);
     }
 
-    public Link[] getLinks()
-    {
+    public Link[] getLinks() {
         Link[] wired_links;
         int i = 0;
 

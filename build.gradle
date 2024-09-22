@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 java {
@@ -31,6 +32,7 @@ sourceSets {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 test {

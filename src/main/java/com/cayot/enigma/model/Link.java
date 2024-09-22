@@ -10,10 +10,20 @@ public class Link {
 	}
 
 	public char getC1() {
-		return c1;
+		return (c1);
 	}
 
 	public char getC2() {
-		return c2;
+		return (c2);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return (true);
+		if (o == null || getClass() != o.getClass())
+			return (false);
+		Link link = (Link) o;
+		return (c1 == link.c1 && c2 == link.c2);
 	}
 }

@@ -1,7 +1,5 @@
 package com.cayot.enigma.model;
 
-import com.cayot.enigma.utils.Array;
-
 import static com.cayot.enigma.utils.Array.makeAlphabeticalArray;
 
 public class Reflector extends SubstitutionPart {
@@ -16,23 +14,13 @@ public class Reflector extends SubstitutionPart {
 
     public static Reflector make(char[] substitutionArray) throws IllegalArgumentException {
         if (substitutionArray.length > 26)
-            throw new IllegalArgumentException("Entry arrays are only generated for rotor size upto 26");
+            throw new IllegalArgumentException("Entry arrays are only generated size upto 26");
 
         char[] entryArray = makeAlphabeticalArray(substitutionArray.length, 'A');
         return make(entryArray, substitutionArray);
     }
 
     public static Reflector make(char[] entryArray , char[] substitutionArray) throws IllegalArgumentException {
-        if (entryArray.length != substitutionArray.length)
-            throw new IllegalArgumentException("Entry and substitution arrays must be the same size");
-        if (entryArray.length > Character.MAX_VALUE)
-            throw new IllegalArgumentException("Array must be smaller than " + Character.MAX_VALUE);
-        if (Array.containDuplicate(entryArray))
-            throw new IllegalArgumentException("Entry array contain two identical characters");
-        if (Array.containDuplicate(substitutionArray))
-            throw new IllegalArgumentException("Substitution array contain two identical characters");
-        if (!Array.containSameValues(entryArray, substitutionArray))
-            throw new IllegalArgumentException("Entry and substitution arrays must contain the same characters");
         return new Reflector(entryArray, substitutionArray);
     }
 }
